@@ -26,9 +26,9 @@ public class SecurityConfig {
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers(
-                                "/auth/swagger-ui/**",
-                                "/auth/v3/api-docs/**",
-                                "/auth/swagger-ui.html"
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
                         ).permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/profile/buyer/**").hasRole("BUYER")
