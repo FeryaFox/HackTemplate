@@ -80,6 +80,20 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "createdUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Article> updatedArticles = new LinkedHashSet<>();
 
+    // Связи с Task
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL)
+    private Set<Task> createdTasks = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "updatedBy", cascade = CascadeType.ALL)
+    private Set<Task> updatedTasks = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "assignedTo", cascade = CascadeType.ALL)
+    private Set<Task> assignedTasks = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "deletedBy", cascade = CascadeType.ALL)
+    private Set<Task> deletedTasks = new LinkedHashSet<>();
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
