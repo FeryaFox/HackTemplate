@@ -51,7 +51,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:3000"); // Разрешаем все источники
         configuration.addAllowedOrigin("http://127.0.0.1:3000");
-        configuration.addAllowedOrigin("https://test.feryafox.ru");
+        configuration.addAllowedOrigin("http://test.feryafox.ru");
         configuration.setAllowCredentials(true);
         configuration.addAllowedMethod("*"); // Разрешаем все методы
         configuration.addAllowedHeader("*"); // Разрешаем все заголовки
