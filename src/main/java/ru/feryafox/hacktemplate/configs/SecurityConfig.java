@@ -31,6 +31,7 @@ public class SecurityConfig {
                                 "/swagger-ui.html"
                         ).permitAll()
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/cookie-test/**").permitAll()
                         .requestMatchers("/profile/buyer/**").hasRole("BUYER")
                         .requestMatchers("/profile/seller/**").hasRole("SELLER")
                         .requestMatchers("/intern/auth/profile/**").permitAll()
@@ -52,6 +53,7 @@ public class SecurityConfig {
         configuration.setAllowCredentials(true);
         configuration.addAllowedMethod("*"); // Разрешаем все методы
         configuration.addAllowedHeader("*"); // Разрешаем все заголовки
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
