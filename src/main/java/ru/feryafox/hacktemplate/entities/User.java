@@ -93,6 +93,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "deletedBy", cascade = CascadeType.ALL)
     private Set<Task> deletedTasks = new LinkedHashSet<>();
 
+    // Связь с TaskHistory
+    @OneToMany(mappedBy = "changedBy")
+    private Set<TaskHistory> taskHistories = new LinkedHashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

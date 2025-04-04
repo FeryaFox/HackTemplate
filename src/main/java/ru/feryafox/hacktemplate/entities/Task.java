@@ -3,8 +3,7 @@ package ru.feryafox.hacktemplate.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "task")
@@ -75,7 +74,7 @@ public class Task {
         ACTIVE, POSTPONED, COMPLETED
     }
 
-    @Column(name = "is_deleted")
+    @Column(name = "is_deleted", nullable = false)
     @Builder.Default
     private boolean isDeleted = false;
 
@@ -87,4 +86,10 @@ public class Task {
     @ManyToOne()
     @JoinColumn(name = "deleted_by", referencedColumnName = "id")
     private User deletedBy = null;
+
+    // Связи с TaskHistory
+    @OneToMany(mappedBy = "task")
+    private Set<TaskHistory> taskHistories = new LinkedHashSet<>();
+
+
 }
