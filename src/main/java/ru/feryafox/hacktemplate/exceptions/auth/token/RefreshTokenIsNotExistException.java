@@ -1,7 +1,7 @@
-package ru.feryafox.hacktemplate.exceptions.token;
+package ru.feryafox.hacktemplate.exceptions.auth.token;
 
 
-import ru.feryafox.hacktemplate.exceptions.AuthServiceException;
+import ru.feryafox.hacktemplate.exceptions.auth.AuthServiceException;
 
 public class RefreshTokenIsNotExistException extends AuthServiceException {
     public RefreshTokenIsNotExistException(String token) {

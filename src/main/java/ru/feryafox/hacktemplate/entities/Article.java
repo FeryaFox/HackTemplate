@@ -34,7 +34,7 @@ public class Article {
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     @Builder.Default
-    private Date createAt = new Date();
+    private Date createdAt = new Date();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "created_user_id")
