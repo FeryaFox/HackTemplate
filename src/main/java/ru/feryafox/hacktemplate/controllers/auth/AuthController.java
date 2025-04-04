@@ -30,7 +30,6 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(
             @RequestBody RegisterRequest registerRequest) {
-        System.out.println(registerRequest);
         authService.register(registerRequest);
         return ResponseEntity.noContent().build();
     }

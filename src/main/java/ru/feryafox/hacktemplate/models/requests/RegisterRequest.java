@@ -10,10 +10,9 @@ import lombok.Data;
 @Schema(description = "Запрос на регистрацию пользователя")
 public class RegisterRequest {
 
-    @NotBlank(message = "Номер телефона обязателен")
-    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Неверный формат номера телефона")
-    @Schema(description = "Номер телефона пользователя", example = "+79991234567")
-    private String phoneNumber;
+    @NotBlank(message = "Логин")
+    @Schema(description = "Логин пользователя", example = "Foo")
+    private String login;
 
     @NotBlank(message = "Пароль обязателен")
     @Size(min = 8, max = 32, message = "Пароль должен содержать от 8 до 32 символов")
@@ -33,9 +32,4 @@ public class RegisterRequest {
     @Size(max = 50, message = "Отчество не должно превышать 50 символов")
     @Schema(description = "Отчество пользователя", example = "Сергеевич")
     private String middleName;
-
-    @NotBlank(message = "Роль пользователя обязательна")
-    @Pattern(regexp = "BUYER|SELLER", message = "Роль должна быть либо 'BUYER', либо 'SELLER'")
-    @Schema(description = "Роль пользователя", example = "BUYER")
-    private String role;
 }

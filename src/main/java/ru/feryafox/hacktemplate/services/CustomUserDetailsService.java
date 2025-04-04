@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     });
         } else {
             log.info("Идентификатор {} распознан как номер телефона", identifier);
-            userDetails = userRepository.findByPhoneNumber(identifier)
+            userDetails = userRepository.findByLogin(identifier)
                     .orElseThrow(() -> {
                         log.warn("Пользователь с номером {} не найден", identifier);
                         return new UsernameNotFoundException("Пользователь не найден по номеру телефона: " + identifier);

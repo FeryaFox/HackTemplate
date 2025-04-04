@@ -21,7 +21,7 @@ public class Role {
     private RoleName name;
 
     public enum RoleName {
-        ROLE_BUYER, ROLE_SELLER, ROLE_ADMIN, ROLE_DISTRIBUTION_POINT_EMPLOYEE, ROLE_DELIVERY
+        ROLE_USER, ROLE_ADMIN
     }
 
     public String getRoleName() {

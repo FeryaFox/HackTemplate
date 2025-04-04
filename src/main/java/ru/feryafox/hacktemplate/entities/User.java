@@ -22,8 +22,8 @@ public class User implements UserDetails {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "phone_number", nullable = false, unique = true)
-    private String phoneNumber;
+    @Column(name = "login", nullable = false, unique = true)
+    private String login;
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
@@ -46,9 +46,13 @@ public class User implements UserDetails {
     @Builder.Default
     private List<RefreshToken> refreshTokens = new ArrayList<>();
 
-    @Column(name = "is_enabled", nullable = false)
+    @Column(name = "is_deleted", nullable = false)
     @Builder.Default
-    private boolean isEnabled = true;
+    private boolean isDeleted = false;
+
+    @Column(name = "deleted_at")
+    @Builder.Default
+    private Date deletedAt = null;
 
     @Column(name = "is_account_non_expired", nullable = false)
     @Builder.Default
@@ -84,7 +88,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return phoneNumber;
+        return login;
     }
 
     @Override
@@ -104,6 +108,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isEnabled;
+        return !isDeleted;
     }
 }

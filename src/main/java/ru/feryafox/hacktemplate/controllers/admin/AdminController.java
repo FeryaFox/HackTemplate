@@ -13,13 +13,5 @@ import ru.feryafox.hacktemplate.services.AuthService;
 @RequestMapping("/admin/auth/")
 @RequiredArgsConstructor
 public class AdminController {
-    private final AuthService authService;
 
-    @PostMapping("create_delivery")
-    public ResponseEntity<?> createDelivery(
-            @RequestBody RegisterRequestDelivery request
-    ) {
-        authService.registerDelivery(request);
-        return ResponseEntity.noContent().build();
-    }
 }
