@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.Date;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "articles")
@@ -14,8 +12,8 @@ import java.util.UUID;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Article {
 
     @Id
@@ -24,6 +22,7 @@ public class Article {
     private UUID id;
 
     @Column(name = "title")
+    @Builder.Default
     private String title = "";
 
     @Column(name = "content")
@@ -34,6 +33,7 @@ public class Article {
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
+    @Builder.Default
     private Date createAt = new Date();
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -42,6 +42,7 @@ public class Article {
 
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
+    @Builder.Default
     private Date updatedAt = new Date();
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -49,11 +50,17 @@ public class Article {
     private User updatedUser;
 
     @Column(name = "is_deleted", nullable = false)
+    @Builder.Default
     private Boolean isDeleted = false;
 
     @Column(name = "deleted_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date deletedAt;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<ArticleHistory> history = new HashSet<>();
 
     @Override
     public final boolean equals(Object o) {

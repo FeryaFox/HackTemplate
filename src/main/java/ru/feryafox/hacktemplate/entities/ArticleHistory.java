@@ -16,7 +16,6 @@ import java.util.UUID;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 public class ArticleHistory {
     @Id
     @GeneratedValue(generator = "UUID")
