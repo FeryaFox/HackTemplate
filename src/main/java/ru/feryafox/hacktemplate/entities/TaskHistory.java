@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name = "task_history")
 @Setter
 @Getter
 @NoArgsConstructor
