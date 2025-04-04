@@ -19,7 +19,6 @@ public class DemoCookieController {
                 .httpOnly(true)
                 .secure(false)          // мы же на http://localhost
                 .path("/")
-                .sameSite("Lax")       // или вообще не указывать
                 .maxAge(60 * 60 * 24)  // 1 день
                 .build();
 
