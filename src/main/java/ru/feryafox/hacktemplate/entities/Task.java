@@ -2,6 +2,8 @@ package ru.feryafox.hacktemplate.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.feryafox.hacktemplate.enums.Priority;
+import ru.feryafox.hacktemplate.enums.Status;
 
 import java.util.*;
 
@@ -55,11 +57,7 @@ public class Task {
 
     @Column(name = "priority")
     @Enumerated(EnumType.STRING)
-    private priorityType priority;
-
-    private enum priorityType {
-        LOW, MEDIUM, HIGH
-    }
+    private Priority priority;
 
     @Column(name = "due_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -68,11 +66,7 @@ public class Task {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private statusType status;
-
-    private enum statusType {
-        ACTIVE, POSTPONED, COMPLETED
-    }
+    private Status status;
 
     @Column(name = "is_deleted", nullable = false)
     @Builder.Default
@@ -90,6 +84,7 @@ public class Task {
     // Связи с TaskHistory
     @OneToMany(mappedBy = "task")
     private Set<TaskHistory> taskHistories = new LinkedHashSet<>();
+
 
 
 }
