@@ -5,14 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import ru.feryafox.hacktemplate.entities.ArticleHistory;
 import ru.feryafox.hacktemplate.entities.Task;
-import ru.feryafox.hacktemplate.entities.TaskHistory;
 import ru.feryafox.hacktemplate.entities.User;
 import ru.feryafox.hacktemplate.enums.EventType;
 import ru.feryafox.hacktemplate.enums.Status;
 import ru.feryafox.hacktemplate.models.requests.Task.CreateTaskRequest;
-import ru.feryafox.hacktemplate.models.requests.Task.EditTaskRequest;
+import ru.feryafox.hacktemplate.models.requests.Task.UpdateTaskRequest;
 import ru.feryafox.hacktemplate.models.responses.Task.GetAllTasksResponce;
 import ru.feryafox.hacktemplate.models.responses.Task.GetTaskResponce;
 import ru.feryafox.hacktemplate.repositories.TaskHistoryRepository;
@@ -60,29 +58,29 @@ public class TaskService {
         baseService.logTaskEvent(savedTask, user, oldStatus, newStatus, EventType.CREATE);
     }
 
-    public void updateTask(EditTaskRequest editTaskRequest,
+    public void updateTask(UpdateTaskRequest updateTaskRequest,
                            CustomUserDetails customUserDetails) {
         var userId = UUID.fromString(customUserDetails.getUsername());
         var user = baseService.getUserOrElseThrow(userId);
 
-        Task taskToEdit = baseService.getTaskOrElseThrow(editTaskRequest.getId());
+        Task taskToEdit = baseService.getTaskOrElseThrow(updateTaskRequest.getId());
 
         Status oldStatus = taskToEdit.getStatus();
 
-        User assignedUser = baseService.getUserOrElseThrow(editTaskRequest.getAssignedTo());
+        User assignedUser = baseService.getUserOrElseThrow(updateTaskRequest.getAssignedTo());
 
-        taskToEdit.setTitle(editTaskRequest.getTitle());
-        taskToEdit.setDescription(editTaskRequest.getDescription());
+        taskToEdit.setTitle(updateTaskRequest.getTitle());
+        taskToEdit.setDescription(updateTaskRequest.getDescription());
         taskToEdit.setUpdatedBy(user);
         taskToEdit.setUpdatedAt(new Date());
         taskToEdit.setAssignedTo(assignedUser);
-        taskToEdit.setPriority(editTaskRequest.getPriority());
-        taskToEdit.setDueDate(editTaskRequest.getDueDate());
-        taskToEdit.setStatus(editTaskRequest.getStatus());
+        taskToEdit.setPriority(updateTaskRequest.getPriority());
+        taskToEdit.setDueDate(updateTaskRequest.getDueDate());
+        taskToEdit.setStatus(updateTaskRequest.getStatus());
 
         Task savedTask = taskRepository.save(taskToEdit);
 
-        Status newStatus = editTaskRequest.getStatus();
+        Status newStatus = updateTaskRequest.getStatus();
         baseService.logTaskEvent(savedTask, user, oldStatus, newStatus, EventType.UPDATE);
     }
 

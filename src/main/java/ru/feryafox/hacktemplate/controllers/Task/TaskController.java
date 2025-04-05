@@ -1,20 +1,16 @@
 package ru.feryafox.hacktemplate.controllers.Task;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import ru.feryafox.hacktemplate.enums.Status;
 import ru.feryafox.hacktemplate.models.requests.Task.CreateTaskRequest;
-import ru.feryafox.hacktemplate.models.requests.Task.EditTaskRequest;
+import ru.feryafox.hacktemplate.models.requests.Task.UpdateTaskRequest;
 import ru.feryafox.hacktemplate.models.responses.Task.GetAllTasksResponce;
 import ru.feryafox.hacktemplate.models.responses.Task.GetTaskResponce;
 import ru.feryafox.hacktemplate.services.TaskService;
 import ru.feryafox.hacktemplate.utils.auth.CustomUserDetails;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -34,9 +30,9 @@ public class TaskController {
     }
 
     @PostMapping("updateTask")
-    public ResponseEntity<?> updateTask(@RequestBody EditTaskRequest editTaskRequest,
+    public ResponseEntity<?> updateTask(@RequestBody UpdateTaskRequest updateTaskRequest,
                                         @AuthenticationPrincipal CustomUserDetails userDetails) {
-        taskService.updateTask(editTaskRequest, userDetails);
+        taskService.updateTask(updateTaskRequest, userDetails);
         return ResponseEntity.noContent().build();
     }
 

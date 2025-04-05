@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import ru.feryafox.hacktemplate.enums.Priority;
 import ru.feryafox.hacktemplate.enums.Status;
-import ru.feryafox.hacktemplate.models.responses.UserResponce;
 
 import java.util.Date;
 import java.util.UUID;
@@ -13,7 +12,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @Schema(description = "Запрос на редактирование задачи")
-public class EditTaskRequest {
+public class UpdateTaskRequest {
 
     private UUID id;
 
