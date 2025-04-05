@@ -29,7 +29,7 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("update")
+    @PutMapping("update")
     public ResponseEntity<?> updateTask(@RequestBody UpdateTaskRequest updateTaskRequest,
                                         @AuthenticationPrincipal CustomUserDetails userDetails) {
         taskService.updateTask(updateTaskRequest, userDetails);
