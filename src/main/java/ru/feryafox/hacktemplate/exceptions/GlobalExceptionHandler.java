@@ -15,9 +15,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.feryafox.hacktemplate.exceptions.token.RefreshTokenIsNotExistException;
-import ru.feryafox.hacktemplate.exceptions.user.UserIsExistException;
-import ru.feryafox.hacktemplate.exceptions.user.UserIsNotExistException;
+import ru.feryafox.hacktemplate.exceptions.auth.token.RefreshTokenIsNotExistException;
+import ru.feryafox.hacktemplate.exceptions.auth.user.UserIsExistException;
+import ru.feryafox.hacktemplate.exceptions.auth.user.UserIsNotExistException;
 
 @RestControllerAdvice
 @Slf4j

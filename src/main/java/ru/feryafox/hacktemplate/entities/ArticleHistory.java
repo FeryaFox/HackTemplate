@@ -32,13 +32,14 @@ public class ArticleHistory {
 
     @Column(name = "changed_at")
     @Temporal(TemporalType.TIMESTAMP)
+    @Builder.Default
     private Date changedAt = new Date();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "changed_user_id")
     private User changedUser;
 
-    enum EventType {
+    public enum EventType {
         CREATE,
         UPDATE,
         DELETE,
