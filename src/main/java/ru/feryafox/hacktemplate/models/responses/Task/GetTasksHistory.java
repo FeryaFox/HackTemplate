@@ -17,7 +17,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Ответ с конкретной задачей")
+@Schema(description = "Ответ с историей задач")
 public class GetTasksHistory {
 
     private String taskName;

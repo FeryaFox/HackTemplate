@@ -12,7 +12,7 @@ import ru.feryafox.hacktemplate.services.TaskService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasksHistory/")
+@RequestMapping("/tasks/history/")
 @RequiredArgsConstructor
 public class TaskHistoryController {
 
