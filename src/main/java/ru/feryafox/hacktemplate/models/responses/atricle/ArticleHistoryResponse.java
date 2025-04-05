@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Builder
 public class ArticleHistoryResponse {
     private String id;
+    private String articleId;
     private String title;
     private ArticleHistory.EventType eventType;
     private Date changedAt;
@@ -28,6 +29,7 @@ public class ArticleHistoryResponse {
     public static ArticleHistoryResponse from(ArticleHistory articleHistory) {
         return ArticleHistoryResponse.builder()
                 .id(articleHistory.getId().toString())
+                .articleId(articleHistory.getArticle().getId().toString())
                 .title(articleHistory.getArticle().getTitle())
                 .eventType(articleHistory.getEventType())
                 .changedAt(articleHistory.getChangedAt())
