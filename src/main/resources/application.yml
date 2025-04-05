@@ -37,3 +37,8 @@ springdoc:
     enabled: true
     path: /swagger-ui.html
 
+minio:
+  url: http://test.feryafox.ru:9000
+  access-key: minioadmin
+  secret-key: sUperSecretKeyFooBar
+  public-url: http://test.feryafox.ru:9000
