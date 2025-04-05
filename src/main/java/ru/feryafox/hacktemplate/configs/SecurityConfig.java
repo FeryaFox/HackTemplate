@@ -58,6 +58,8 @@ public class SecurityConfig {
         configuration.addAllowedOrigin("http://localhost:3000"); // Разрешаем все источники
         configuration.addAllowedOrigin("http://127.0.0.1:3000");
         configuration.addAllowedOrigin("http://test.feryafox.ru");
+        configuration.addAllowedOrigin("http://hack2025.feryafox.ru");
+        configuration.addAllowedOrigin("https://hack2025.feryafox.ru");
         configuration.setAllowCredentials(true);
         configuration.addAllowedMethod("*"); // Разрешаем все методы
         configuration.addAllowedHeader("*"); // Разрешаем все заголовки
