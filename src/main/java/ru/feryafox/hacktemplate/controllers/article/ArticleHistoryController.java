@@ -18,4 +18,9 @@ public class ArticleHistoryController {
     public ResponseEntity<?> getArticleHistory(@PathVariable String articleId) {
         return ResponseEntity.ok(articleService.getArticleHistory(articleId));
     }
+
+    @GetMapping("")
+    public ResponseEntity<?> getAllArticleHistory() {
+        return ResponseEntity.ok(articleService.getAllArticleHistory());
+    }
 }

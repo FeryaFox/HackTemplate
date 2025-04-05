@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
@@ -76,6 +75,7 @@ public class AuthService {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             user = (User) authentication.getPrincipal();
+            System.out.println(user.isDeleted());
             log.info("Вход выполнен успешно: {}", loginRequest.getLogin());
         } catch (AuthenticationException e) {
             log.error("Ошибка аутентификации пользователя {}: {}", loginRequest.getLogin(), e.getMessage());
