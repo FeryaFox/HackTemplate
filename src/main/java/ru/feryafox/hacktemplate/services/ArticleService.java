@@ -10,6 +10,7 @@ import ru.feryafox.hacktemplate.entities.ArticleHistory;
 import ru.feryafox.hacktemplate.models.requests.article.CreateArticleRequest;
 import ru.feryafox.hacktemplate.models.requests.article.UpdateArticleRequest;
 import ru.feryafox.hacktemplate.models.responses.UserResponce;
+import ru.feryafox.hacktemplate.models.responses.atricle.ArticleIdResponse;
 import ru.feryafox.hacktemplate.models.responses.atricle.ArticleInfoResponse;
 import ru.feryafox.hacktemplate.models.responses.atricle.FullArticleInfoResponse;
 import ru.feryafox.hacktemplate.repositories.ArticleHistoryRepository;
@@ -32,7 +33,7 @@ public class ArticleService {
     private final ArticleDefaultImageService articleDefaultImageService;
 
     @Transactional
-    public String createArticle(CreateArticleRequest createArticleRequest, CustomUserDetails customUserDetails) {
+    public ArticleIdResponse createArticle(CreateArticleRequest createArticleRequest, CustomUserDetails customUserDetails) {
         var userId = UUID.fromString(customUserDetails.getUsername());
         var user = baseService.getUserOrElseThrow(userId);
 
@@ -47,7 +48,7 @@ public class ArticleService {
 
         baseService.logArticleEvent(article, user, ArticleHistory.EventType.CREATE);
 
-        return savedArticle.getId().toString();
+        return new ArticleIdResponse(savedArticle.getId().toString());
     }
 
     @Transactional

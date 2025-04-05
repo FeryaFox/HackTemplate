@@ -76,7 +76,7 @@ public class ArticleController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("get_deleted_articles ")
+    @GetMapping("get_deleted_articles")
     public ResponseEntity<?> getDeletedArticles() {
         return ResponseEntity.ok(articleService.getDeletedArticles());
     }
