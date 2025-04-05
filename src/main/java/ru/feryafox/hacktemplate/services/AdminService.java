@@ -23,7 +23,7 @@ public class AdminService {
     private final BaseService baseService;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public List<GetAllUsersResponce> getAllUsers() {
         return userRepository.findAll().stream()
