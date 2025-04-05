@@ -25,7 +25,7 @@ public class ArticleController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/{articleId}/upload_image")
+    @PostMapping("{articleId}/upload_image")
     public ResponseEntity<?> uploadImage(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable String articleId,
@@ -33,5 +33,10 @@ public class ArticleController {
     ) {
         articleService.uploadImage(userDetails, articleId, file);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<?> getAllArticles() {
+        return ResponseEntity.ok(articleService.getAllArticles());
     }
 }
