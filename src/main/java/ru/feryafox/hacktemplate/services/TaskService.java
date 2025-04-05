@@ -1,11 +1,11 @@
 package ru.feryafox.hacktemplate.services;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import ru.feryafox.hacktemplate.entities.Article;
+import ru.feryafox.hacktemplate.entities.ArticleHistory;
 import ru.feryafox.hacktemplate.entities.Task;
 import ru.feryafox.hacktemplate.entities.TaskHistory;
 import ru.feryafox.hacktemplate.entities.User;
@@ -26,6 +26,7 @@ import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TaskService {
     private final BaseService baseService;
     private final TaskRepository taskRepository;
@@ -33,14 +34,12 @@ public class TaskService {
     private final UserRepository userRepository;
 
     // CRUD
-
     public void createTask(CreateTaskRequest createTaskRequest,
                            CustomUserDetails customUserDetails) {
         var userId = UUID.fromString(customUserDetails.getUsername());
         var user = baseService.getUserOrElseThrow(userId);
 
-        // Вынести в Base Service
-        User assignedUser = userRepository.findById(createTaskRequest.getAssignedTo()).get();
+        User assignedUser = baseService.getUserOrElseThrow(createTaskRequest.getAssignedTo());
 
         Task task = Task.builder()
                 .title(createTaskRequest.getTitle())
@@ -55,16 +54,9 @@ public class TaskService {
 
         Task savedTask = taskRepository.save(task);
 
-
-        TaskHistory taskHistory = TaskHistory.builder()
-                .task(savedTask)
-                .eventType(TaskHistory.EventType.CREATE)
-                .changedBy(user)
-                .oldStatus(createTaskRequest.getStatus())
-                .newStatus(createTaskRequest.getStatus())
-                .build();
-
-        taskHistoryRepository.save(taskHistory);
+        Status oldStatus = createTaskRequest.getStatus();
+        Status newStatus = createTaskRequest.getStatus();
+        baseService.logTaskEvent(savedTask, user, oldStatus, newStatus, TaskHistory.EventType.CREATE);
     }
 
     public void updateTask(EditTaskRequest editTaskRequest,
@@ -72,13 +64,11 @@ public class TaskService {
         var userId = UUID.fromString(customUserDetails.getUsername());
         var user = baseService.getUserOrElseThrow(userId);
 
-        // Вынести в Base Service
-        var taskToEdit = taskRepository.findById(editTaskRequest.getId()).get();
+        Task taskToEdit = baseService.getTaskOrElseThrow(editTaskRequest.getId());
 
         Status oldStatus = taskToEdit.getStatus();
 
-        // Вынести в Base Service
-        User assignedUser = userRepository.findById(editTaskRequest.getAssignedTo()).get();
+        User assignedUser = baseService.getUserOrElseThrow(editTaskRequest.getAssignedTo());
 
         taskToEdit.setTitle(editTaskRequest.getTitle());
         taskToEdit.setDescription(editTaskRequest.getDescription());
@@ -91,38 +81,23 @@ public class TaskService {
 
         Task savedTask = taskRepository.save(taskToEdit);
 
-        TaskHistory taskHistory = TaskHistory.builder()
-                .task(savedTask)
-                .eventType(TaskHistory.EventType.UPDATE)
-                .changedBy(user)
-                .oldStatus(oldStatus)
-                .newStatus(editTaskRequest.getStatus())
-                .build();
-
-        taskHistoryRepository.save(taskHistory);
+        Status newStatus = editTaskRequest.getStatus();
+        baseService.logTaskEvent(savedTask, user, oldStatus, newStatus, TaskHistory.EventType.UPDATE);
     }
 
     public void deleteTask(UUID id, CustomUserDetails customUserDetails) {
         var userId = UUID.fromString(customUserDetails.getUsername());
         var user = baseService.getUserOrElseThrow(userId);
 
-        // Перенести в Base Service
-        Task taskToDelete = taskRepository.findById(id).get();
+        Task taskToDelete = baseService.getTaskOrElseThrow(id);
 
         taskToDelete.setDeleted(true);
         taskToDelete.setDeletedAt(new Date());
         taskToDelete.setDeletedBy(user);
 
-        TaskHistory taskHistory = TaskHistory.builder()
-                .task(taskToDelete)
-                .eventType(TaskHistory.EventType.DELETE)
-                .changedBy(user)
-                .oldStatus(taskToDelete.getStatus())
-                // Что здесь при удалении происходит со статусом. Он не меняется?
-                .newStatus(taskToDelete.getStatus())
-                .build();
-
-        taskHistoryRepository.save(taskHistory);
+        Status oldStatus = taskToDelete.getStatus();
+        Status newStatus = taskToDelete.getStatus();
+        baseService.logTaskEvent(taskToDelete, user, oldStatus, newStatus, TaskHistory.EventType.DELETE);
     }
 
     public GetTaskResponce findTaskById(UUID id) {
