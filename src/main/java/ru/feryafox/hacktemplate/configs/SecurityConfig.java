@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/articles/**").hasRole("USER")
                         .requestMatchers("/tasks/**").hasRole("USER")
                         .requestMatchers("/tasksHistory/**").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/profile/buyer/**").hasRole("BUYER")
                         .requestMatchers("/profile/seller/**").hasRole("SELLER")
                         .requestMatchers("/intern/auth/profile/**").permitAll()
