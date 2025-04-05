@@ -10,6 +10,8 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=builder /build/target/*.jar app.jar
 
+COPY default.png ./default.png
+
 ENV SPRING_PROFILES_ACTIVE=docker
 
 CMD ["java", "-jar", "app.jar"]
