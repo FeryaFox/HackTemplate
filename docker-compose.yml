@@ -16,7 +16,16 @@ services:
     networks:
       - yaeshop-network
 
-
+  minio:
+    image: minio/minio:latest
+    container_name: minioYaEShop
+    ports:
+      - "9000:9000"
+      - "9090:9090"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: sUperSecretKeyFooBar
+    command: server /data --console-address ":9090"
 
 volumes:
   postgres_data:
