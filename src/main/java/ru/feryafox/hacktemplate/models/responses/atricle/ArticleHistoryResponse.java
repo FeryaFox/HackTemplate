@@ -36,4 +36,8 @@ public class ArticleHistoryResponse {
     public static List<ArticleHistoryResponse> from(Set<ArticleHistory> articleHistoryList) {
         return articleHistoryList.stream().map(ArticleHistoryResponse::from).collect(Collectors.toList());
     }
+
+    public static List<ArticleHistoryResponse> from(List<ArticleHistory> articleHistoryList) {
+        return articleHistoryList.stream().map(ArticleHistoryResponse::from).collect(Collectors.toList());
+    }
 }

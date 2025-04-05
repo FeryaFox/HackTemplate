@@ -2,14 +2,12 @@ package ru.feryafox.hacktemplate.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.feryafox.hacktemplate.entities.Article;
 import ru.feryafox.hacktemplate.entities.ArticleHistory;
 import ru.feryafox.hacktemplate.models.requests.article.CreateArticleRequest;
 import ru.feryafox.hacktemplate.models.requests.article.UpdateArticleRequest;
-import ru.feryafox.hacktemplate.models.responses.UserResponce;
 import ru.feryafox.hacktemplate.models.responses.atricle.ArticleHistoryResponse;
 import ru.feryafox.hacktemplate.models.responses.atricle.ArticleIdResponse;
 import ru.feryafox.hacktemplate.models.responses.atricle.ArticleInfoResponse;
@@ -32,6 +30,7 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final ArticleImageService articleImageService;
     private final ArticleDefaultImageService articleDefaultImageService;
+    private final ArticleHistoryRepository articleHistoryRepository;
 
     @Transactional
     public ArticleIdResponse createArticle(CreateArticleRequest createArticleRequest, CustomUserDetails customUserDetails) {
@@ -133,5 +132,9 @@ public class ArticleService {
         var article = baseService.getArticleOrElseThrow(UUID.fromString(articleId));
 
         return ArticleHistoryResponse.from(article.getHistory());
+    }
+
+    public List<ArticleHistoryResponse> getAllArticleHistory() {
+        return ArticleHistoryResponse.from(articleHistoryRepository.findAll());
     }
 }
