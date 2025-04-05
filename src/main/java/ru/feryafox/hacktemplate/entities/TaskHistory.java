@@ -2,6 +2,7 @@ package ru.feryafox.hacktemplate.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.feryafox.hacktemplate.enums.Status;
 
 import java.util.Date;
 import java.util.UUID;
@@ -26,10 +27,10 @@ public class TaskHistory {
     private Date changedAt = new Date();
 
     @Column(name = "old_status")
-    private statusType oldStatus;
+    private Status oldStatus;
 
     @Column(name = "new_status")
-    private statusType newStatus;
+    private Status newStatus;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "task_id", referencedColumnName = "id")
@@ -43,11 +44,8 @@ public class TaskHistory {
     @JoinColumn(name = "changed_by", referencedColumnName = "id")
     private User changedBy;
 
-    private enum EventType {
+    public enum EventType {
         CREATE, UPDATE, DELETE, STATUS_CHANGE
     }
 
-    private enum statusType {
-        ACTIVE, POSTPONED, COMPLETED
-    }
 }

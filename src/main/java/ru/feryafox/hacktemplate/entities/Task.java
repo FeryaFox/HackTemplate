@@ -13,7 +13,7 @@ import java.util.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Task {
 
     @Id
@@ -26,12 +26,6 @@ public class Task {
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "image_path")
-    private String imagePath;
-
-    @Column(name = "text")
-    private String text;
 
     @ManyToOne()
     @JoinColumn(name = "created_by", referencedColumnName = "id")

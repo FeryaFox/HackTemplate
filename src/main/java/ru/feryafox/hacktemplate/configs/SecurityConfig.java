@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/cookie-test/**").permitAll()
                         .requestMatchers("/articles/**").hasRole("USER")
+                        .requestMatchers("/tasks/**").hasRole("USER")
                         .requestMatchers("/profile/buyer/**").hasRole("BUYER")
                         .requestMatchers("/profile/seller/**").hasRole("SELLER")
                         .requestMatchers("/intern/auth/profile/**").permitAll()
