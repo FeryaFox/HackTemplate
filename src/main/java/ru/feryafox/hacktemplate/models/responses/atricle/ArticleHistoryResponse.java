@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import ru.feryafox.hacktemplate.entities.ArticleHistory;
 import ru.feryafox.hacktemplate.models.responses.UserResponce;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -31,8 +32,20 @@ public class ArticleHistoryResponse {
                 .eventType(articleHistory.getEventType())
                 .changedAt(articleHistory.getChangedAt())
                 .changedBy(UserResponce.convertToUserResponse(articleHistory.getChangedUser()))
-                .isDeleted(articleHistory.getArticle().getIsDeleted())
+                .isDeleted(isDeletedBefore1Week(articleHistory))
                 .build();
+    }
+
+    private static boolean isDeletedBefore1Week(ArticleHistory articleHistory) {
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        Date oneWeekAgo = calendar.getTime();
+
+        return articleHistory.getArticle().getIsDeleted()
+                && articleHistory.getChangedAt().after(oneWeekAgo)
+                && articleHistory.getChangedAt().before(now);
     }
 
     public static List<ArticleHistoryResponse> from(Set<ArticleHistory> articleHistoryList) {
