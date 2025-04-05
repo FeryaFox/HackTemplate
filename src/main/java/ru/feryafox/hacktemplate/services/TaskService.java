@@ -101,8 +101,7 @@ public class TaskService {
     }
 
     public GetTaskResponce findTaskById(UUID id) {
-        // Вынести в Base Service
-        return GetTaskResponce.fromTask(taskRepository.findById(id).get());
+        return GetTaskResponce.fromTask(baseService.getTaskOrElseThrow(id));
     }
 
     public List<GetAllTasksResponce> findAll() {
@@ -130,7 +129,8 @@ public class TaskService {
         }
 
         // Вынести в Base Service
-        Task task = taskRepository.findById(id).get();
+        // Task task = taskRepository.findById(id).get();
+        Task task = baseService.getTaskOrElseThrow(id);
 
         Status oldStatus = task.getStatus();
 
@@ -138,15 +138,16 @@ public class TaskService {
 
         Task savedTask = taskRepository.save(task);
 
-        TaskHistory taskHistory = TaskHistory.builder()
-                .task(savedTask)
-                .eventType(TaskHistory.EventType.UPDATE)
-                .changedBy(user)
-                .oldStatus(oldStatus)
-                .newStatus(statusEnum)
-                .build();
-
-        taskHistoryRepository.save(taskHistory);
+        baseService.logTaskEvent(savedTask, user, oldStatus, statusEnum, TaskHistory.EventType.STATUS_CHANGE);
+//        TaskHistory taskHistory = TaskHistory.builder()
+//                .task(savedTask)
+//                .eventType(TaskHistory.EventType.UPDATE)
+//                .changedBy(user)
+//                .oldStatus(oldStatus)
+//                .newStatus(statusEnum)
+//                .build();
+//
+//        taskHistoryRepository.save(taskHistory);
     }
 
 }

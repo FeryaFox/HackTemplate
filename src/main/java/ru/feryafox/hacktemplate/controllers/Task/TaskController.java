@@ -52,17 +52,19 @@ public class TaskController {
     }
 
     @DeleteMapping("{id}")
-    public void deleteTask(@PathVariable UUID id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> deleteTask(@PathVariable UUID id, @AuthenticationPrincipal CustomUserDetails userDetails) {
         taskService.deleteTask(id, userDetails);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("changeTaskStatus/{id}")
-    public void changeStatus(
+    public ResponseEntity<?> changeStatus(
             @PathVariable UUID id,
             @RequestBody Map<String, String> requestBody,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         taskService.changeTaskStatus(id, requestBody, userDetails);
+        return ResponseEntity.noContent().build();
     }
 
 }
