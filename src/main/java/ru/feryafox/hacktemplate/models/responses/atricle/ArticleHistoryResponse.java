@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Builder
 public class ArticleHistoryResponse {
     private String id;
+    private String title;
     private ArticleHistory.EventType eventType;
     private Date changedAt;
     private UserResponce changedBy;
@@ -25,6 +26,7 @@ public class ArticleHistoryResponse {
     public static ArticleHistoryResponse from(ArticleHistory articleHistory) {
         return ArticleHistoryResponse.builder()
                 .id(articleHistory.getId().toString())
+                .title(articleHistory.getArticle().getTitle())
                 .eventType(articleHistory.getEventType())
                 .changedAt(articleHistory.getChangedAt())
                 .changedBy(UserResponce.convertToUserResponse(articleHistory.getChangedUser()))
