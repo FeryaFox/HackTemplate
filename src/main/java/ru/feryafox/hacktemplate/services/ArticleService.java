@@ -10,6 +10,7 @@ import ru.feryafox.hacktemplate.entities.ArticleHistory;
 import ru.feryafox.hacktemplate.models.requests.article.CreateArticleRequest;
 import ru.feryafox.hacktemplate.models.requests.article.UpdateArticleRequest;
 import ru.feryafox.hacktemplate.models.responses.UserResponce;
+import ru.feryafox.hacktemplate.models.responses.atricle.ArticleHistoryResponse;
 import ru.feryafox.hacktemplate.models.responses.atricle.ArticleIdResponse;
 import ru.feryafox.hacktemplate.models.responses.atricle.ArticleInfoResponse;
 import ru.feryafox.hacktemplate.models.responses.atricle.FullArticleInfoResponse;
@@ -126,5 +127,11 @@ public class ArticleService {
 
     public List<ArticleInfoResponse> getAllArticles() {
         return ArticleInfoResponse.from(articleRepository.findByIsDeletedFalse(), articleDefaultImageService.DEFAULT_IMAGE);
+    }
+
+    public List<ArticleHistoryResponse> getArticleHistory(String articleId) {
+        var article = baseService.getArticleOrElseThrow(UUID.fromString(articleId));
+
+        return ArticleHistoryResponse.from(article.getHistory());
     }
 }
