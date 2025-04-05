@@ -22,6 +22,7 @@ public class ArticleHistoryResponse {
     private ArticleHistory.EventType eventType;
     private Date changedAt;
     private UserResponce changedBy;
+    private Boolean isDeleted;
 
     public static ArticleHistoryResponse from(ArticleHistory articleHistory) {
         return ArticleHistoryResponse.builder()
@@ -30,6 +31,7 @@ public class ArticleHistoryResponse {
                 .eventType(articleHistory.getEventType())
                 .changedAt(articleHistory.getChangedAt())
                 .changedBy(UserResponce.convertToUserResponse(articleHistory.getChangedUser()))
+                .isDeleted(articleHistory.getArticle().getIsDeleted())
                 .build();
     }
 
