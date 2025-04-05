@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface ArticleRepository extends JpaRepository<Article, UUID> {
     List<Article> findByIsDeletedFalse();
+    List<Article> findByIsDeletedTrue();
 }

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.feryafox.hacktemplate.entities.User;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,5 +30,15 @@ public class UserResponce {
         response.setMiddleName(user.getMiddleName());
         response.setSurname(user.getSurname());
         return response;
+    }
+
+    public static List<UserResponce> convertToUserResponseList(List<User> users) {
+        if (users == null) {
+            return null;
+        }
+
+        return users.stream()
+                .map(UserResponce::convertToUserResponse)
+                .toList();
     }
 }
