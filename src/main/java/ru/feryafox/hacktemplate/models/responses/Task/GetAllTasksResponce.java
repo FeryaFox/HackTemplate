@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.checkerframework.checker.units.qual.N;
 import ru.feryafox.hacktemplate.entities.Task;
 import ru.feryafox.hacktemplate.enums.Priority;
+import ru.feryafox.hacktemplate.enums.Status;
 import ru.feryafox.hacktemplate.models.responses.UserResponce;
 
 import java.util.Date;
@@ -24,6 +25,7 @@ public class GetAllTasksResponce {
     private UserResponce assignedTo;
     private Date dueDate;
     private Priority priority;
+    private Status status;
 
     public static GetAllTasksResponce fromTask(Task task) {
         if (task == null) {
@@ -36,6 +38,7 @@ public class GetAllTasksResponce {
         response.setCreatedAt(task.getCreatedAt());
         response.setDueDate(task.getDueDate());
         response.setPriority(task.getPriority());
+        response.setStatus(task.getStatus());
 
         if (task.getAssignedTo() != null) {
             response.setAssignedTo(UserResponce.convertToUserResponse(task.getAssignedTo()));
