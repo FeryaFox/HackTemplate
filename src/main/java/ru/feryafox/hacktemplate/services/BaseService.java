@@ -48,10 +48,10 @@ public class BaseService {
     }
 
     @Transactional
-    public void logArticleEvent(Task task, User user, Status oldStatus, Status newStatus) {
+    public void logTaskEvent(Task task, User user, Status oldStatus, Status newStatus, TaskHistory.EventType event) {
         TaskHistory taskHistory = TaskHistory.builder()
                 .task(task)
-                .eventType(TaskHistory.EventType.DELETE)
+                .eventType(event)
                 .changedBy(user)
                 .oldStatus(oldStatus)
                 .newStatus(newStatus)
