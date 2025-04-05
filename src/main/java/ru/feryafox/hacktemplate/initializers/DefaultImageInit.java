@@ -11,7 +11,7 @@ import ru.feryafox.hacktemplate.services.minio.ArticleDefaultImageService;
 @RequiredArgsConstructor
 public class DefaultImageInit {
     @Bean
-    public CommandLineRunner init(ArticleDefaultImageService articleDefaultImageService) {
+    public CommandLineRunner initDefaultImage(ArticleDefaultImageService articleDefaultImageService) {
         return args -> {
             articleDefaultImageService.upload();
         };
