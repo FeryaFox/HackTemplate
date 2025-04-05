@@ -17,7 +17,7 @@ public class ArticleInfoResponse {
     private String image;
     private String title;
     private Date createdAt;
-    private UserResponce updateBy;
+    private UserResponce updatedBy;
 
     public static ArticleInfoResponse from(Article article, String defaultImage) {
         return ArticleInfoResponse.builder()
@@ -25,7 +25,7 @@ public class ArticleInfoResponse {
                 .image(article.getImage() == null ? defaultImage : article.getImage())
                 .title(article.getTitle())
                 .createdAt(article.getCreatedAt())
-                .updateBy(UserResponce.convertToUserResponse(article.getUpdatedUser()))
+                .updatedBy(UserResponce.convertToUserResponse(article.getUpdatedUser()))
                 .build();
     }
 
