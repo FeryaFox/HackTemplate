@@ -29,7 +29,7 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("updateTask")
+    @PostMapping("update")
     public ResponseEntity<?> updateTask(@RequestBody UpdateTaskRequest updateTaskRequest,
                                         @AuthenticationPrincipal CustomUserDetails userDetails) {
         taskService.updateTask(updateTaskRequest, userDetails);
@@ -53,7 +53,7 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("changeTaskStatus/{id}")
+    @PostMapping("change/status/{id}")
     public ResponseEntity<?> changeStatus(
             @PathVariable UUID id,
             @RequestBody Map<String, String> requestBody,
