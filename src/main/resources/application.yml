@@ -5,10 +5,10 @@ spring:
   application:
     name: HackTemplate
 
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/hack_template
-    username: postgres
-    password: 123
     driver-class-name: org.postgresql.Driver
 
   flyway:
@@ -30,7 +30,6 @@ spring:
       max-request-size: 10MB
 
 jwt:
-  secret: qwertyuioasdfghjklzxcvbnm,qwertyuioasdfghjklzxcvbnm,.sasdfghjklqwertyuio
   jwt-expiration-ms: 3600000
   refresh-token-expiration-ms: 86400000
   max-session: 5
@@ -42,9 +41,3 @@ springdoc:
   swagger-ui:
     enabled: true
     path: /swagger-ui.html
-
-minio:
-  url: http://test.feryafox.ru:9000
-  access-key: minioadmin
-  secret-key: sUperSecretKeyFooBar
-  public-url: http://test.feryafox.ru:9000

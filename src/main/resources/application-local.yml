@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/hack_template
+    username: postgres
+    password: 123
+
+jwt:
+  secret: qwertyuioasdfghjklzxcvbnm,qwertyuioasdfghjklzxcvbnm,.sasdfghjklqwertyuio
+
+minio:
+  access-key: minioadmin
+  secret-key: sUperSecretKeyFooBar
+  url: http://test.feryafox.ru:9000
+  public-url: http://test.feryafox.ru:9000
