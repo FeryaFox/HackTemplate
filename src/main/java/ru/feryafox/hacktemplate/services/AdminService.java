@@ -8,6 +8,7 @@ import ru.feryafox.hacktemplate.models.responses.admin.GetAllUsersResponce;
 import ru.feryafox.hacktemplate.repositories.RoleRepository;
 import ru.feryafox.hacktemplate.repositories.UserRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -32,7 +33,12 @@ public class AdminService {
     public void setUserAdmin(String userId) {
         var user = baseService.getUserOrElseThrow(UUID.fromString(userId));
 
-        user.setRoles(Set.of(roleRepository.findByName(Role.RoleName.ROLE_ADMIN).get()));
+        Role role = roleRepository.findByName(Role.RoleName.ROLE_ADMIN).get();
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+
+        user.setRoles(roles);
 
         userRepository.save(user);
     }
