@@ -3,14 +3,12 @@ package ru.feryafox.hacktemplate.services;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.feryafox.hacktemplate.entities.Article;
-import ru.feryafox.hacktemplate.entities.ArticleHistory;
-import ru.feryafox.hacktemplate.entities.User;
+import ru.feryafox.hacktemplate.entities.*;
+import ru.feryafox.hacktemplate.enums.Status;
 import ru.feryafox.hacktemplate.exceptions.article.ArticleIsNotExistException;
 import ru.feryafox.hacktemplate.exceptions.auth.user.UserIsNotExistException;
-import ru.feryafox.hacktemplate.repositories.ArticleHistoryRepository;
-import ru.feryafox.hacktemplate.repositories.ArticleRepository;
-import ru.feryafox.hacktemplate.repositories.UserRepository;
+import ru.feryafox.hacktemplate.exceptions.task.TaskNotExistException;
+import ru.feryafox.hacktemplate.repositories.*;
 
 import java.util.UUID;
 
@@ -21,6 +19,8 @@ public class BaseService {
     private final UserRepository userRepository;
     private final ArticleRepository articleRepository;
     private final ArticleHistoryRepository articleHistoryRepository;
+    private final TaskRepository taskRepository;
+    private final TaskHistoryRepository taskHistoryRepository;
 
     public User getUserOrElseThrow(UUID userId) {
         return userRepository.findById(userId)
@@ -41,4 +41,25 @@ public class BaseService {
                 .build();
         articleHistoryRepository.save(history);
     }
+
+    public Task getTaskOrElseThrow(UUID taskId) {
+        return taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskNotExistException(taskId.toString()));
+    }
+
+    @Transactional
+    public void logArticleEvent(Task task, User user, Status oldStatus, Status newStatus) {
+        TaskHistory taskHistory = TaskHistory.builder()
+                .task(task)
+                .eventType(TaskHistory.EventType.DELETE)
+                .changedBy(user)
+                .oldStatus(oldStatus)
+                .newStatus(newStatus)
+                .build();
+
+        taskHistoryRepository.save(taskHistory);
+    }
+
+
+
 }
