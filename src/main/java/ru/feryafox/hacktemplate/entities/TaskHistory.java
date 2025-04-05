@@ -2,6 +2,7 @@ package ru.feryafox.hacktemplate.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.feryafox.hacktemplate.enums.EventType;
 import ru.feryafox.hacktemplate.enums.Status;
 
 import java.util.Date;
@@ -43,9 +44,5 @@ public class TaskHistory {
     @ManyToOne()
     @JoinColumn(name = "changed_by", referencedColumnName = "id")
     private User changedBy;
-
-    public enum EventType {
-        CREATE, UPDATE, DELETE, STATUS_CHANGE
-    }
 
 }

@@ -9,6 +9,7 @@ import ru.feryafox.hacktemplate.entities.ArticleHistory;
 import ru.feryafox.hacktemplate.entities.Task;
 import ru.feryafox.hacktemplate.entities.TaskHistory;
 import ru.feryafox.hacktemplate.entities.User;
+import ru.feryafox.hacktemplate.enums.EventType;
 import ru.feryafox.hacktemplate.enums.Status;
 import ru.feryafox.hacktemplate.models.requests.Task.CreateTaskRequest;
 import ru.feryafox.hacktemplate.models.requests.Task.EditTaskRequest;
@@ -56,7 +57,7 @@ public class TaskService {
 
         Status oldStatus = createTaskRequest.getStatus();
         Status newStatus = createTaskRequest.getStatus();
-        baseService.logTaskEvent(savedTask, user, oldStatus, newStatus, TaskHistory.EventType.CREATE);
+        baseService.logTaskEvent(savedTask, user, oldStatus, newStatus, EventType.CREATE);
     }
 
     public void updateTask(EditTaskRequest editTaskRequest,
@@ -82,7 +83,7 @@ public class TaskService {
         Task savedTask = taskRepository.save(taskToEdit);
 
         Status newStatus = editTaskRequest.getStatus();
-        baseService.logTaskEvent(savedTask, user, oldStatus, newStatus, TaskHistory.EventType.UPDATE);
+        baseService.logTaskEvent(savedTask, user, oldStatus, newStatus, EventType.UPDATE);
     }
 
     public void deleteTask(UUID id, CustomUserDetails customUserDetails) {
@@ -97,7 +98,7 @@ public class TaskService {
 
         Status oldStatus = taskToDelete.getStatus();
         Status newStatus = taskToDelete.getStatus();
-        baseService.logTaskEvent(taskToDelete, user, oldStatus, newStatus, TaskHistory.EventType.DELETE);
+        baseService.logTaskEvent(taskToDelete, user, oldStatus, newStatus, EventType.DELETE);
     }
 
     public GetTaskResponce findTaskById(UUID id) {
@@ -128,8 +129,6 @@ public class TaskService {
                     "Неккоректный статус. Разрешенные значения: " + Arrays.toString(Status.values()));
         }
 
-        // Вынести в Base Service
-        // Task task = taskRepository.findById(id).get();
         Task task = baseService.getTaskOrElseThrow(id);
 
         Status oldStatus = task.getStatus();
@@ -138,16 +137,8 @@ public class TaskService {
 
         Task savedTask = taskRepository.save(task);
 
-        baseService.logTaskEvent(savedTask, user, oldStatus, statusEnum, TaskHistory.EventType.STATUS_CHANGE);
-//        TaskHistory taskHistory = TaskHistory.builder()
-//                .task(savedTask)
-//                .eventType(TaskHistory.EventType.UPDATE)
-//                .changedBy(user)
-//                .oldStatus(oldStatus)
-//                .newStatus(statusEnum)
-//                .build();
-//
-//        taskHistoryRepository.save(taskHistory);
+        baseService.logTaskEvent(savedTask, user, oldStatus, statusEnum, EventType.STATUS_CHANGE);
+
     }
 
 }

@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.feryafox.hacktemplate.entities.*;
+import ru.feryafox.hacktemplate.enums.EventType;
 import ru.feryafox.hacktemplate.enums.Status;
 import ru.feryafox.hacktemplate.exceptions.article.ArticleIsNotExistException;
 import ru.feryafox.hacktemplate.exceptions.auth.user.UserIsNotExistException;
@@ -48,7 +49,7 @@ public class BaseService {
     }
 
     @Transactional
-    public void logTaskEvent(Task task, User user, Status oldStatus, Status newStatus, TaskHistory.EventType event) {
+    public void logTaskEvent(Task task, User user, Status oldStatus, Status newStatus, EventType event) {
         TaskHistory taskHistory = TaskHistory.builder()
                 .task(task)
                 .eventType(event)
