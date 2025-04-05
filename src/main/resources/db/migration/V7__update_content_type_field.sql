@@ -1,0 +1,2 @@
+ALTER TABLE articles
+ALTER COLUMN content TYPE TEXT;
