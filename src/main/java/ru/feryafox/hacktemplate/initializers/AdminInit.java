@@ -8,6 +8,7 @@ import ru.feryafox.hacktemplate.entities.Role;
 import ru.feryafox.hacktemplate.entities.User;
 import ru.feryafox.hacktemplate.repositories.RoleRepository;
 import ru.feryafox.hacktemplate.repositories.UserRepository;
+import ru.feryafox.hacktemplate.services.BaseService;
 import ru.feryafox.hacktemplate.services.minio.ArticleDefaultImageService;
 import ru.feryafox.hacktemplate.utils.PasswordGen;
 
@@ -17,26 +18,24 @@ import java.util.Set;
 @Configuration
 public class AdminInit {
     @Bean
-    public CommandLineRunner initAdmin(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public CommandLineRunner initAdmin(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, BaseService baseService) {
         return args -> {
             String username = "admin";
 
             if (userRepository.findByLogin(username).isEmpty()) {
                 String password = PasswordGen.generatePassword(16);
 
-                Role role = roleRepository.findByName(Role.RoleName.ROLE_ADMIN).get();
 
-                Set<Role> roles = new HashSet<>();
-                roles.add(role);
 
-                User user = User.builder()
-                        .login(username)
-                        .passwordHash(passwordEncoder.encode(password))
-                        .firstName("Лис")
-                        .surname("Админ")
-                        .middleName("Админович")
-                        .roles(roles)
-                        .build();
+                User user = new User();
+
+                baseService.setRole(user, Role.RoleName.ROLE_ADMIN);
+
+                user.setLogin(username);
+                user.setPasswordHash(passwordEncoder.encode(password));
+                user.setFirstName("Лис");
+                user.setSurname("Админ");
+                user.setMiddleName("Админович");
 
                 userRepository.save(user);
 

@@ -11,6 +11,8 @@ import ru.feryafox.hacktemplate.exceptions.auth.user.UserIsNotExistException;
 import ru.feryafox.hacktemplate.exceptions.task.TaskNotExistException;
 import ru.feryafox.hacktemplate.repositories.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -22,6 +24,7 @@ public class BaseService {
     private final ArticleHistoryRepository articleHistoryRepository;
     private final TaskRepository taskRepository;
     private final TaskHistoryRepository taskHistoryRepository;
+    private final RoleRepository roleRepository;
 
     public User getUserOrElseThrow(UUID userId) {
         return userRepository.findById(userId)
@@ -59,5 +62,15 @@ public class BaseService {
                 .build();
 
         taskHistoryRepository.save(taskHistory);
+    }
+
+    @Transactional
+    public void setRole(User user, Role.RoleName role) {
+        Role roleE = roleRepository.findByName(role).get();
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleE);
+
+        user.setRoles(roles);
     }
 }

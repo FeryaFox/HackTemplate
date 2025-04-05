@@ -39,6 +39,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final BaseService baseService;
 
     @Transactional
     public void register(RegisterRequest registerRequest) {
@@ -56,9 +57,8 @@ public class AuthService {
         user.setMiddleName(registerRequest.getMiddleName());
         user.setPasswordHash(passwordEncoder.encode(registerRequest.getPassword()));
 
-        Role role = roleRepository.findByName(Role.RoleName.ROLE_USER).get();
+        baseService.setRole(user, Role.RoleName.ROLE_USER);
 
-        user.getRoles().add(role);
         userRepository.save(user);
 
         log.info("Регистрация пользователя {} завершена успешно", registerRequest.getLogin());

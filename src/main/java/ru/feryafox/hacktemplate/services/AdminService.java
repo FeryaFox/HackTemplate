@@ -33,12 +33,7 @@ public class AdminService {
     public void setUserAdmin(String userId) {
         var user = baseService.getUserOrElseThrow(UUID.fromString(userId));
 
-        Role role = roleRepository.findByName(Role.RoleName.ROLE_ADMIN).get();
-
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-
-        user.setRoles(roles);
+        baseService.setRole(user, Role.RoleName.ROLE_ADMIN);
 
         userRepository.save(user);
     }
