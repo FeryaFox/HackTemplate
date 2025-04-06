@@ -15,6 +15,8 @@ import java.util.Date;
 @Schema(description = "Ответ со всеми пользователями")
 public class GetAllUsersResponce {
 
+    private String id;
+
     private String login;
 
     private String firstName;
@@ -33,6 +35,7 @@ public class GetAllUsersResponce {
         }
 
         GetAllUsersResponce response = new GetAllUsersResponce();
+        response.setId(user.getId().toString());
         response.setLogin(user.getLogin());
         response.setFirstName(user.getFirstName());
         response.setMiddleName(user.getMiddleName());
