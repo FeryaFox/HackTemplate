@@ -6,26 +6,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.feryafox.hacktemplate.entities.Role;
 import ru.feryafox.hacktemplate.entities.User;
-import ru.feryafox.hacktemplate.repositories.RoleRepository;
 import ru.feryafox.hacktemplate.repositories.UserRepository;
 import ru.feryafox.hacktemplate.services.BaseService;
-import ru.feryafox.hacktemplate.services.minio.ArticleDefaultImageService;
 import ru.feryafox.hacktemplate.utils.PasswordGen;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Configuration
 public class AdminInit {
     @Bean
-    public CommandLineRunner initAdmin(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, BaseService baseService) {
+    public CommandLineRunner initAdmin(UserRepository userRepository, PasswordEncoder passwordEncoder, BaseService baseService) {
         return args -> {
             String username = "admin";
 
             if (userRepository.findByLogin(username).isEmpty()) {
                 String password = PasswordGen.generatePassword(16);
-
-
 
                 User user = new User();
 

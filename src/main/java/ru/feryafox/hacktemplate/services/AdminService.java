@@ -7,15 +7,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.feryafox.hacktemplate.entities.Role;
-import ru.feryafox.hacktemplate.entities.Task;
 import ru.feryafox.hacktemplate.entities.User;
-import ru.feryafox.hacktemplate.enums.EventType;
-import ru.feryafox.hacktemplate.enums.Status;
 import ru.feryafox.hacktemplate.models.requests.admin.UpdateUserRequest;
 import ru.feryafox.hacktemplate.models.responses.admin.GetAllUsersResponce;
-import ru.feryafox.hacktemplate.repositories.RoleRepository;
 import ru.feryafox.hacktemplate.repositories.UserRepository;
-import ru.feryafox.hacktemplate.utils.auth.CustomUserDetails;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,7 +21,6 @@ import java.util.stream.Collectors;
 public class AdminService {
 
     private final BaseService baseService;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 

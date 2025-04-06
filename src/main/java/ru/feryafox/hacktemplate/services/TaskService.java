@@ -13,9 +13,7 @@ import ru.feryafox.hacktemplate.models.requests.Task.CreateTaskRequest;
 import ru.feryafox.hacktemplate.models.requests.Task.UpdateTaskRequest;
 import ru.feryafox.hacktemplate.models.responses.Task.GetAllTasksResponce;
 import ru.feryafox.hacktemplate.models.responses.Task.GetTaskResponce;
-import ru.feryafox.hacktemplate.repositories.TaskHistoryRepository;
 import ru.feryafox.hacktemplate.repositories.TaskRepository;
-import ru.feryafox.hacktemplate.repositories.UserRepository;
 import ru.feryafox.hacktemplate.utils.auth.CustomUserDetails;
 
 import java.util.*;
@@ -29,8 +27,6 @@ import java.util.stream.StreamSupport;
 public class TaskService {
     private final BaseService baseService;
     private final TaskRepository taskRepository;
-    private final TaskHistoryRepository taskHistoryRepository;
-    private final UserRepository userRepository;
 
     // CRUD
     public void createTask(CreateTaskRequest createTaskRequest,
